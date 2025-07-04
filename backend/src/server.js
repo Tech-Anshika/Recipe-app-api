@@ -2,7 +2,8 @@ import express from "express";
 import env from "./config/env.js";
 import { db } from "./config/db.js";
 import { favoritesTable } from "./db/schema.js";
-import { eq, and } from "drizzle-orm"; // ✅ required
+import { and, eq } from "drizzle-orm"; // ✅ required
+import job from "./config/cron.js"; // ✅ required for cron job
 
 const app = express();
 app.use(express.json());
