@@ -4,8 +4,14 @@ import { db } from "./config/db.js";
 import { favoritesTable } from "./db/schema.js";
 import { and, eq } from "drizzle-orm"; // ✅ required
 import job from "./config/cron.js"; // ✅ required for cron job
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
+app.use(express.json());
+
+if (env.NODE_ENV === "production") job.start();
+
 app.use(express.json());
 
 // Health check
