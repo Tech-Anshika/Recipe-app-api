@@ -1,12 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config();
+import  ENV  from "./src/config/env.js";
 
 export default {
   schema: "./src/db/schema.js",
   out: "./src/db/migrations",
-  dialect: "postgresql", // ✅ required field
-  dbCredentials: {
-    url: "postgresql://neondb_owner:npg_op7JIyDdNtu8@ep-red-star-a8904zod-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require",
-  },
+  dialect: "postgresql",
+  dbCredentials: { url: ENV.DATABASE_URL },
 };
-

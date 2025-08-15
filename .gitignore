@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# System/cache files
+AppData/
+*.log
+*.tmp
+*.cache
+
+# Expo & build files
+.expo/
+dist/

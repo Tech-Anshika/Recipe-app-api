@@ -1,10 +1,9 @@
-// backend/src/config/env.js
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 
-const env = {
+export default {
+  DATABASE_URL: process.env.DATABASE_URL,
   PORT: process.env.PORT || 5001,
-  DB_URL: process.env.DB_URL,
   NODE_ENV: process.env.NODE_ENV || "development",
 };
 
-export default env;
