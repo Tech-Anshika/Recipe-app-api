@@ -1,15 +1,12 @@
 # Node modules
 node_modules/
 
-# Expo / React Native
+# Expo
 .expo/
 .expo-shared/
-*.expo*
 
-# Cache / temp files
-*.log
+# System files
 AppData/
+*.tmp
+*.log
 *.DS_Store
-
-# Chrome / system cache
-**/AppData/Local/Google/Chrome/*
