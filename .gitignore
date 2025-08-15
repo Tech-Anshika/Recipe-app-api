@@ -7,6 +7,7 @@ node_modules/
 
 # System files
 AppData/
+Temp/
 *.tmp
 *.log
 *.DS_Store
