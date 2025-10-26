@@ -18,7 +18,7 @@ app.get("/api/health", (req, res) => {
 
 app.post("/api/favorites", async (req, res) => {
   try {
-    console.log("Incoming Favorite Request Body:", req.body); // 👈 Add this line
+    console.log("Incoming Favorite Request Body:", req.body);
 
     const { userId, recipeId, title, image, cookTime, servings } = req.body;
 
@@ -27,17 +27,17 @@ app.post("/api/favorites", async (req, res) => {
     }
 
     const newFavorite = await db.insert(favoritesTable).values({
-      userId: parseInt(userId),
+      userId: String(userId),
       recipeId: parseInt(recipeId),
       title,
-      image,
-      cookTime: parseInt(cookTime),
-      servings: parseInt(servings),
+      image: image || "",
+      cookTime: String(cookTime) || "Not specified",
+      servings: String(servings) || "Not specified",
     }).returning();
 
     res.status(201).json(newFavorite[0]);
   } catch (error) {
-    console.error("❌ Error adding favorite:", error); // 👈 Ensure this logs full error
+    console.error("❌ Error adding favorite:", error);
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 });
@@ -49,11 +49,11 @@ app.get("/api/favorites/:userId", async (req, res) => {
     const userFavorites = await db
       .select()
       .from(favoritesTable)
-      .where(eq(favoritesTable.userId, userId));
+      .where(eq(favoritesTable.userId, String(userId)));
 
     res.status(200).json(userFavorites);
   } catch (error) {
-    console.log("Error fetching the favorites", error);
+    console.error("Error fetching the favorites", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
@@ -65,12 +65,12 @@ app.delete("/api/favorites/:userId/:recipeId", async (req, res) => {
     await db
       .delete(favoritesTable)
       .where(
-        and(eq(favoritesTable.userId, userId), eq(favoritesTable.recipeId, parseInt(recipeId)))
+        and(eq(favoritesTable.userId, String(userId)), eq(favoritesTable.recipeId, parseInt(recipeId)))
       );
 
     res.status(200).json({ message: "Favorite removed successfully" });
   } catch (error) {
-    console.log("Error removing a favorite", error);
+    console.error("Error removing a favorite", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });

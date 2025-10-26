@@ -87,12 +87,12 @@ const RecipeDetailScreen = () => {
         setIsSaved(false);
       } else {
         const bodyData = {
-          userId,
+          userId: String(userId),
           recipeId: parseInt(recipeId),
           title: recipe.title || "Untitled",
           image: recipe.image || "",
-          cookTime: recipe.cookTime || "Not specified",
-          servings: recipe.servings || "Not specified",
+          cookTime: String(recipe.cookTime) || "Not specified",
+          servings: String(recipe.servings) || "Not specified",
         };
 
         const response = await fetch(`${API_URL}/favorites`, {
@@ -103,7 +103,11 @@ const RecipeDetailScreen = () => {
           body: JSON.stringify(bodyData),
         });
 
-        if (!response.ok) throw new Error("Failed to save recipe");
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Failed to save recipe:", errorData);
+          throw new Error(errorData.message || "Failed to save recipe");
+        }
         setIsSaved(true);
       }
     } catch (error) {
